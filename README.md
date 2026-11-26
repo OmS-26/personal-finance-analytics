@@ -11,11 +11,8 @@ against a known answer.
 
 ## Dashboard
 
-> **Tableau Public:** _add link here_
->
-> ![Dashboard screenshot](dashboard/screenshot.png)
-
-See [dashboard/TABLEAU.md](dashboard/TABLEAU.md) for how it was built.
+A Tableau Public dashboard built on the exported CSVs in `exports/` is in progress. The build
+steps are in [dashboard/TABLEAU.md](dashboard/TABLEAU.md).
 
 ## What the SQL does
 
@@ -65,10 +62,11 @@ users ──< accounts ──< transactions >── merchants
 
 ## How to run
 
-Requires MySQL 8.0+ (or MariaDB 10.6+) and Python 3.9+.
+Requires MySQL 8.0.16+ (or MariaDB 10.6+) and Python 3.9+. Tested on MySQL 8.0 and MariaDB 10.11.
 
 ```bash
-# 1. (Optional) regenerate the data. A pre-generated sql/02_seed_data.sql is included.
+# 1. (Optional) regenerate the data. A pre-generated sql/02_seed_data.sql is included,
+#    and the same seed always produces identical data.
 python3 scripts/generate_data.py --users 30 --seed 42
 
 # 2. Build the database and run the reports
@@ -82,6 +80,9 @@ pip install -r requirements.txt
 python3 scripts/export_for_tableau.py --user root
 ```
 
+**On Windows:** run step 2 in Command Prompt rather than PowerShell, because PowerShell doesn't
+support `<`. Also use `python` instead of `python3`.
+
 ## Project structure
 
 ```
@@ -94,7 +95,7 @@ scripts/
   generate_data.py       synthetic data generator (standard library only)
   export_for_tableau.py  CSV export + anomaly precision/recall check
 exports/                 CSVs for Tableau and anomaly ground truth
-dashboard/               Tableau build notes and screenshot
+dashboard/               Tableau build notes
 ```
 
 ## Possible next steps
